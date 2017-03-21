@@ -1,5 +1,5 @@
 import React, { Component }  from 'react'
-import './font-face.sass'
+import './header.sass'
 
 export default class MainHeader extends Component {
 
@@ -13,7 +13,7 @@ export default class MainHeader extends Component {
 
     return (
       <h1 className="main-brand">
-      3D Reactor
+      SVG TREE
       </h1>
     );
   }
