@@ -22,7 +22,7 @@ export default class Footer extends Component {
 
     return (
       <Paper className="AppFooter">
-        <BottomNavigation selectedIndex={1} style={{'minHeight': '200px'}}>
+        <BottomNavigation selectedIndex={1}>
           <BottomNavigationItem
             label="Recents"
             icon={recentsIcon}

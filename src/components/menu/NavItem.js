@@ -5,16 +5,14 @@ import { createStructuredSelector} from 'reselect'
 
 class NavItem extends React.Component {
   render () {
-    const { route } = this.props;
-    console.log('route', route);
-    const { index, onlyActiveOnIndex, to, children } = this.props
 
+    const { route, to, children } = this.props
     const isActive = (route === to);
 
-    let style = isActive ? { 'borderBottom': '2px solid rgba(255,255,255,1)'} : {};
+    let className = isActive ? 'menu-link active' : 'menu-link';
 
     return (
-      <Link className="menu-link" style={style} to={to}>{children}</Link>
+      <Link className={className} to={to}>{children}</Link>
     )
   }
 }

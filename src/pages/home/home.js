@@ -61,22 +61,12 @@ class Home extends Component {
     const comments = this.props.comments.get('comments').toJS();
     return (
       <div>
-          <Helmet title="React Magics" />
-          <h2 className="page-title">Welcome home</h2>
+          <Helmet title="SVG Tree" />
+          <h2 className="page-title">Import</h2>
 
-          <ul style={{listStyleType: 'none'}}>
-          {
-            comments.map(cm => { return (
-              <li key={cm.id} className="counter-item">{'Comment ' + cm.id + ' '}
-                <button onClick={this.props.incrementComment.bind(null, cm.id)}>+</button>
-                {' - ' + cm.count}
-              </li>);
-            })
-          }
-          </ul>
           <RaisedButton
           onTouchTap={this.handleTouchTap.bind(this)}
-          label="Click me"
+          label="Upload SVG"
         />
 
         <Popover

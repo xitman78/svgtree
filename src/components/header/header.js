@@ -12,9 +12,14 @@ export default class MainHeader extends Component {
     console.log('Render Header');
 
     return (
-      <h1 className="main-brand">
-      SVG TREE
-      </h1>
+      <div className="top-header">
+        <h1 className="main-brand">
+          SVG TREE
+        </h1>
+        <div className="brand-desription">
+          Web Animation Toolkit
+        </div>
+      </div>
     );
   }
 }
