@@ -36,10 +36,13 @@ class Home extends Component {
     // This prevents ghost click.
     event.preventDefault();
 
-    this.setState({
-      open: true,
-      anchorEl: event.currentTarget,
-    });
+    // this.setState({
+    //   open: true,
+    //   anchorEl: event.currentTarget,
+    // });
+
+    let inputField = this.refs.fileField;
+    inputField.click();
   };
 
   handleRequestClose = () => {
@@ -63,46 +66,12 @@ class Home extends Component {
       <div>
           <Helmet title="SVG Tree" />
           <h2 className="page-title">Import</h2>
-
+          <p>Drag and drop your SVG file here or click on the button bellow.</p>
           <RaisedButton
           onTouchTap={this.handleTouchTap.bind(this)}
-          label="Upload SVG"
-        />
-
-        <Popover
-          open={this.state.open}
-          anchorEl={this.state.anchorEl}
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-          targetOrigin={{horizontal: 'left', vertical: 'top'}}
-          onRequestClose={this.handleRequestClose.bind(this)}
-        >
-          <Menu>
-            <div><Checkbox
-              label="Red"
-              checked={this.props.colors.red}
-              onCheck={this.onCheck.bind(this, 'red')}
-              style={checkStyle}
-            /></div>
-            <div><Checkbox
-              label="Green"
-              checked={this.props.colors.green}
-              onCheck={this.onCheck.bind(this, 'green')}
-              style={checkStyle}
-            /></div>
-            <div><Checkbox
-              label="Orange"
-              checked={this.props.colors.orange}
-              onCheck={this.onCheck.bind(this, 'orange')}
-              style={checkStyle}
-            /></div>
-            <div><Checkbox
-              label="Yellow"
-              checked={this.props.colors.yellow}
-              onCheck={this.onCheck.bind(this, 'yellow')}
-              style={checkStyle}
-            /></div>
-          </Menu>
-        </Popover>
+          label="Upload SVG">
+            <input className="inner-upload-button" ref="fileField" type="file" name="image1" accept=".svg" id="img1" />
+          </RaisedButton>
 
           <div className="dragged-field-container">
             <DraggedField>

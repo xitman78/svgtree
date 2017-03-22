@@ -16,7 +16,7 @@ class MainMenu extends React.Component {
         <NavItem className="menu-link" activeClassName="menu-link-active" to="/" index={true}>Import SVG</NavItem>
         <NavItem className="menu-link" activeClassName="menu-link-active" to="/bounce">Timeline</NavItem>
         <NavItem className="menu-link" activeClassName="menu-link-active" to="/works">Export</NavItem>
-        <NavItem className="menu-link" activeClassName="menu-link-active" to="/posts">Docs</NavItem>
+        <NavItem className="menu-link" activeClassName="menu-link-active" to="/posts">How To</NavItem>
       </div>
     );
   }

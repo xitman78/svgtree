@@ -2,10 +2,11 @@
   background-color: #0789ea
   // height: 150px
   padding: 16px
+  box-shadow: 0 2px 5px #AAA
   // color: white
 
 .menu-link, .menu-link:link, .menu-link:visited
-  color: #FFF
+  color: #DDDDFF
   font-family: Roboto
   font-size: 1em
   font-weight: 400
@@ -13,7 +14,9 @@
   margin: 0 16px
   border-bottom: 2px solid rgba(0,0,0,0)
   padding-bottom: 4px
+  transition: border-bottom 0.2s linear
   &.active
+    color: #FFF
     border-bottom: 2px solid rgba(255,255,255,1)
 
 .menu-link:hover
