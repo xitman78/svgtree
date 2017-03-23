@@ -10,6 +10,8 @@ import posts from './posts'
 import modals from './modals'
 import dragged from './dragged'
 
+import svgFile from './svgFile'
+
 const routeInitialState = fromJS({
   locationBeforeTransitions: null,
 });
@@ -35,6 +37,7 @@ const rootReducer = combineReducers(
     routing: routerReducer,
     dragged: dragged,
     form: reducerForm,
+    svgFile: svgFile
   }
 );
 
