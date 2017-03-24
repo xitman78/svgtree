@@ -1,4 +1,4 @@
-import  xmlToJson from '../../helpers/xmlToJson'
+import xmlToJson from '../../helpers/xmlToJson'
 
 export function readSvgFile(file) {
 
@@ -29,7 +29,7 @@ export function readSvgFile(file) {
       let parser = parser = new DOMParser();
       let xmlDoc = parser.parseFromString(reader.result,"image/svg+xml");
 
-      console.log('xmlDoc', xmlDoc);
+      //console.log('xmlDoc', xmlDoc);
       let parsedSvg = xmlToJson(xmlDoc);
 
       console.log('parsedSvg', parsedSvg);
