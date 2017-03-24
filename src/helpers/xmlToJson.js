@@ -2,36 +2,48 @@
 function xmlToJson(xml) {
 
 	// Create the return object
-	var obj = {};
+	let obj = {};
 
 	if (xml.nodeType == 1) { // element
 		// do attributes
 		if (xml.attributes.length > 0) {
-		obj["@attributes"] = {};
-			for (var j = 0; j < xml.attributes.length; j++) {
-				var attribute = xml.attributes.item(j);
-				obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+		obj["@props"] = {};
+			for (let j = 0; j < xml.attributes.length; j++) {
+				let attribute = xml.attributes.item(j);
+				obj["@props"][attribute.nodeName] = attribute.nodeValue;
 			}
 		}
 	} else if (xml.nodeType == 3) { // text
-		obj = xml.nodeValue;
+		obj = typeof(xml.nodeValue) === "string" ? xml.nodeValue.trim() : xml.nodeValue;
 	}
 
 	// do children
 	if (xml.hasChildNodes()) {
-		for(var i = 0; i < xml.childNodes.length; i++) {
-			var item = xml.childNodes.item(i);
-			var nodeName = item.nodeName;
-			if (typeof(obj[nodeName]) == "undefined") {
-				obj[nodeName] = xmlToJson(item);
-			} else {
-				if (typeof(obj[nodeName].push) == "undefined") {
-					var old = obj[nodeName];
-					obj[nodeName] = [];
-					obj[nodeName].push(old);
-				}
-				obj[nodeName].push(xmlToJson(item));
+		obj.children = [];
+		for(let i = 0; i < xml.childNodes.length; i++) {
+			let item = xml.childNodes.item(i);
+			let nodeName = item.nodeName;
+
+			if(nodeName === '#comment') { //ignore comments
+				continue;
 			}
+
+			if(nodeName === "style" || nodeName === "script") {
+				// console.log("item", item.textContent);
+				obj.children.push({tag: nodeName, textContent: item.textContent});
+				continue;
+			}
+
+			let child = xmlToJson(item);
+
+			if(child.children && child.children.length === 0) delete child.children;   // remove empty children prop
+
+			if(nodeName === '#text' && typeof(child) === "string" && child.trim() === '') {
+				continue;
+			}
+
+			obj.children.push({...child, tag: nodeName});
+
 		}
 	}
 	return obj;

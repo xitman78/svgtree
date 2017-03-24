@@ -6,7 +6,8 @@ const initialState = fromJS({
   size: -1,
   type: '',
   content:'',
-  error: ''
+  error: '',
+  parsedSvg: null,
 });
 
 export default function svgFile(state = initialState, action) {
@@ -20,7 +21,8 @@ export default function svgFile(state = initialState, action) {
         size: action.payload.file.size,
         type: action.payload.file.type,
         error: '',
-        content: ''
+        content: '',
+        parsedSvg: null
       });
 
     case 'READ_SVG_RESULT':
@@ -36,6 +38,12 @@ export default function svgFile(state = initialState, action) {
         size: -1,
         error: action.payload.error
       });
+
+    case 'SVG_PARSED':
+     return state.set('parsedSvg', action.payload);
+
+    case 'SVG_PARSE_ERROR':
+      return state.set('error', action.payload.error);
 
     default:
       return state;
