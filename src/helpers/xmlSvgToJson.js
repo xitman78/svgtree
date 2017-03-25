@@ -28,6 +28,7 @@ function xmlToJson(xml) {
 					obj["@props"][convertToReactProps(attribute.nodeName)] = attribute.nodeValue;
 				}
 			}
+			if (!obj['@props']['id']) obj['@props']['id'] = Math.random().toString(36).substring(16);
 		}
 	} else if (xml.nodeType == 3) { // text
 		obj = typeof(xml.nodeValue) === "string" ? xml.nodeValue.trim() : xml.nodeValue;

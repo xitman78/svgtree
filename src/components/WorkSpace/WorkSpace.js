@@ -13,12 +13,14 @@ export default class WorkSpace extends React.Component {
       <div className="work-space-wrapper">
         <ToolBar />
           <div className="middle-wrapper">
-            <SvgImport />
             <ArtBoard />
           </div>
         <Timeline />
       </div>
     );
+
+    // <SvgImport />
+    
   }
 
 }

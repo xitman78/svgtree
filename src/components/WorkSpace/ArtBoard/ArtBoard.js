@@ -4,8 +4,23 @@ import { createStructuredSelector } from 'reselect'
 
 import './ArtBoard.sass'
 
+const excludedTagsForClick = {
+  'g': true,
+  'svg': true,
+  'style': true
+};
+
 
 class ArtBoard extends Component {
+
+
+  onElementClick(pr, ev) {
+    console.log('Element click', pr.nativeEvent);
+    pr.nativeEvent.preventDefault();
+    pr.nativeEvent.stopPropagation();
+
+    //pr.nativeEvent.target.className += " selected-fill";
+  }
 
 
   renderSvgNode(svgNode) {
@@ -14,6 +29,12 @@ class ArtBoard extends Component {
     if (svgNode['tag'] === '#text') return svgNode['textContent'];
 
     let children = svgNode['children'];
+
+    if (!svgNode['@props']) svgNode['@props'] = [];
+
+    if (!excludedTagsForClick[svgNode['tag'].toLowerCase()]) {
+      svgNode['@props'].onClick = this.onElementClick.bind(this);
+    }
 
     let childElements = children ? children.map(child => this.renderSvgNode(child)): [];
 
@@ -32,8 +53,10 @@ class ArtBoard extends Component {
 
     let svg = this.props.svg;
 
+    let containerStyle =  svg ? { width: svg['@props'].width, height: svg['@props'].height } : {display: 'none'};
+
     return (
-      <div className="svg-show-container">
+      <div className="svg-show-container" style={containerStyle}>
         {svg ? (this.renderSvgNode(svg)) : ('No svg')}
       </div>
     );
