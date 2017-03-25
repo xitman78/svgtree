@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import Helmet from 'react-helmet'
 
 import SvgImport from '../../components/SvgImport/SvgImport'
+import SvgShow from '../../components/SvgShow/SvgShow'
+
 import './home.sass'
 
 
@@ -17,6 +19,7 @@ export default class Home extends Component {
       <div>
           <Helmet title="SVG Tree :: App" />
           <SvgImport />
+          <SvgShow />
       </div>
     );
   }

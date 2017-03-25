@@ -1,3 +1,4 @@
+import convertToReactProps from './convertToReactProps'
 
 function xmlToJson(xml) {
 
@@ -10,7 +11,7 @@ function xmlToJson(xml) {
 		obj["@props"] = {};
 			for (let j = 0; j < xml.attributes.length; j++) {
 				let attribute = xml.attributes.item(j);
-				obj["@props"][attribute.nodeName] = attribute.nodeValue;
+				obj["@props"][convertToReactProps(attribute.nodeName)] = attribute.nodeValue;
 			}
 		}
 	} else if (xml.nodeType == 3) { // text
@@ -39,6 +40,12 @@ function xmlToJson(xml) {
 			if(child.children && child.children.length === 0) delete child.children;   // remove empty children prop
 
 			if(nodeName === '#text' && typeof(child) === "string" && child.trim() === '') {
+				continue;
+			}
+
+			if(nodeName === '#text') {
+				console.log('item.textContent', item.textContent);
+				obj.children.push({tag: nodeName, textContent: item.textContent});
 				continue;
 			}
 
