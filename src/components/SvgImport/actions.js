@@ -1,4 +1,4 @@
-import xmlToJson from '../../helpers/xmlToJson'
+import xmlSvgToJson from '../../helpers/xmlSvgToJson'
 
 export function readSvgFile(file) {
 
@@ -31,7 +31,7 @@ export function readSvgFile(file) {
       let parser = parser = new DOMParser();
       let xmlDoc = parser.parseFromString(svgText,"image/svg+xml");
 
-      let parsedSvg = xmlToJson(xmlDoc);
+      let parsedSvg = xmlSvgToJson(xmlDoc);
 
       if (parsedSvg.children && parsedSvg.children.length === 1 && parsedSvg.children[0].tag && parsedSvg.children[0].tag.toLowerCase() === 'svg') {
         // it seems that SVG is correct

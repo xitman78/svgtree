@@ -1,5 +1,14 @@
 import convertToReactProps from './convertToReactProps'
 
+function inlineStyleToCssObject(inlineCSS) {
+	let regex = /([\w-]*)\s*:\s*([^;]*)/g;
+	let match, properties={};
+
+	while(match=regex.exec(inlineCSS)) properties[convertToReactProps(match[1])] = match[2].trim();
+
+	return properties;
+}
+
 function xmlToJson(xml) {
 
 	// Create the return object
@@ -11,7 +20,13 @@ function xmlToJson(xml) {
 		obj["@props"] = {};
 			for (let j = 0; j < xml.attributes.length; j++) {
 				let attribute = xml.attributes.item(j);
-				obj["@props"][convertToReactProps(attribute.nodeName)] = attribute.nodeValue;
+
+				if(attribute.nodeName === "style") { // convert inline styles to object
+					let cssObj = inlineStyleToCssObject(attribute.nodeValue);
+					obj["@props"]["style"] = cssObj;
+				} else {
+					obj["@props"][convertToReactProps(attribute.nodeName)] = attribute.nodeValue;
+				}
 			}
 		}
 	} else if (xml.nodeType == 3) { // text
