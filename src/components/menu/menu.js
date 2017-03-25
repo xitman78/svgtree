@@ -6,14 +6,10 @@ import './menu.sass'
 
 class MainMenu extends React.Component {
 
-  // shouldComponentUpdate() {
-  //   return false; // static menu
-  // }
-
   render() {
     return (
       <div className="main-menu">
-        <NavItem className="menu-link" activeClassName="menu-link-active" to="/" index={true}>App</NavItem>
+        <NavItem className="menu-link" activeClassName="menu-link-active" to="/" index={true}>The App</NavItem>
         <NavItem className="menu-link" activeClassName="menu-link-active" to="/bounce">Timeline</NavItem>
         <NavItem className="menu-link" activeClassName="menu-link-active" to="/works">Export</NavItem>
         <NavItem className="menu-link" activeClassName="menu-link-active" to="/posts">How To</NavItem>

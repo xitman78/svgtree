@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router'
 import { makeSelectLocationState } from './selectors'
 import configureStore from './store'
 import App from './App'
-import Home from './pages/home/home'
+import TheApp from './pages/TheApp/TheApp'
 import Works from './pages/works/works'
 import Bouncer from './pages/bouncer/bouncer'
 import Posts from './pages/posts/posts'
@@ -28,7 +28,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={Home}/>
+        <IndexRoute component={TheApp}/>
         <Route path="posts" component={Posts}/>
         <Route path="works" component={Works}/>
         <Route path="bounce" component={Bouncer}/>

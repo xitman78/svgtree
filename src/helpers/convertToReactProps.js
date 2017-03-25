@@ -242,11 +242,11 @@ const propsMap = {
 };
 
 function dashToCamelCase(str) {
-   return str.replace(/(-.)/g, char => char.slice(1).toUpperCase());
+   return str.replace(/([-:].)/g, char => char.slice(1).toUpperCase());
 }
 
 export default function convertToReactProps(key) {
-  let val = propsMap[key.toLowerCase()];
-  val = val ? val : dashToCamelCase(key);
-  return val ? val : key;
+  //let val = propsMap[key.toLowerCase()];
+  let val = dashToCamelCase(key);
+  return val;
 };

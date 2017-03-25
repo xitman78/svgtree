@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
 
-//import { readSvgFile } from './actions.js'
-//import './SvgImport.sass'
+import './ArtBoard.sass'
 
 
-class SvgShow extends Component {
+class ArtBoard extends Component {
 
 
   renderSvgNode(svgNode) {
@@ -34,7 +33,7 @@ class SvgShow extends Component {
     let svg = this.props.svg;
 
     return (
-      <div>
+      <div className="svg-show-container">
         {svg ? (this.renderSvgNode(svg)) : ('No svg')}
       </div>
     );
@@ -48,4 +47,4 @@ const mapStateToProps = createStructuredSelector({
 export default connect(
   mapStateToProps,
   {  }
-)(SvgShow);
+)(ArtBoard);

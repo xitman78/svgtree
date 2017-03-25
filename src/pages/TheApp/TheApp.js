@@ -3,13 +3,12 @@ import { connect } from 'react-redux'
 //import { createStructuredSelector } from 'reselect'
 import Helmet from 'react-helmet'
 
-import SvgImport from '../../components/SvgImport/SvgImport'
-import SvgShow from '../../components/SvgShow/SvgShow'
+import WorkSpace from '../../components/WorkSpace/WorkSpace'
 
-import './home.sass'
+import './TheApp.sass'
 
 
-export default class Home extends Component {
+export default class TheApp extends Component {
 
   render() {
 
@@ -17,9 +16,8 @@ export default class Home extends Component {
 
     return (
       <div>
-          <Helmet title="SVG Tree :: App" />
-          <SvgImport />
-          <SvgShow />
+          <Helmet title="SVG Tree :: The App" />
+          <WorkSpace />
       </div>
     );
   }

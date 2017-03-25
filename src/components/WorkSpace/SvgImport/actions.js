@@ -1,4 +1,4 @@
-import xmlSvgToJson from '../../helpers/xmlSvgToJson'
+import xmlSvgToJson from 'helpers/xmlSvgToJson'
 
 export function readSvgFile(file) {
 
