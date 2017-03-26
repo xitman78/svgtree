@@ -11,6 +11,7 @@ import modals from './modals'
 import dragged from './dragged'
 
 import svgFile from './svgFile'
+import artBoard from './artBoard'
 
 const routeInitialState = fromJS({
   locationBeforeTransitions: null,
@@ -35,9 +36,9 @@ const rootReducer = combineReducers(
     comments: comments,
     posts: posts,
     routing: routerReducer,
-    dragged: dragged,
     form: reducerForm,
-    svgFile: svgFile
+    svgFile: svgFile,
+    artBoard: artBoard
   }
 );
 

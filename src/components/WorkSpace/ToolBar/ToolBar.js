@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { createStructuredSelector } from 'reselect'
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
@@ -9,7 +10,8 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
-import { readSvgFile } from '../SvgImport/actions.js'
+import { readSvgFile } from '../SvgImport/actions'
+import { increaseScale, decreaseScale, resetScale} from './actions'
 
 import './ToolBar.sass'
 
@@ -41,6 +43,7 @@ class ToolBar extends React.Component {
    }
 
   render() {
+
     return (
       <div className="toolbar-wrapper">
         <Toolbar>
@@ -59,6 +62,9 @@ class ToolBar extends React.Component {
                 accept=".svg"
                 id="svg_file_upload" />
             </RaisedButton>
+            {this.props.scale * 100.0 + '%'}
+            <button onClick={this.props.increaseScale}>+</button>
+            <button onClick={this.props.decreaseScale}>-</button>
             <IconMenu
               iconButtonElement={
                 <IconButton touch={true}>
@@ -66,7 +72,7 @@ class ToolBar extends React.Component {
                 </IconButton>
               }
             >
-              <MenuItem primaryText="Download" />
+              <MenuItem primaryText="Reset scale" onClick={this.props.resetScale}/>
               <MenuItem primaryText="More Info" />
             </IconMenu>
           </ToolbarGroup>
@@ -88,7 +94,11 @@ class ToolBar extends React.Component {
 
 }
 
+const mapStateToProps = createStructuredSelector({
+  scale: state => state.getIn(['artBoard', 'scale'])
+});
+
 export default connect(
-  null,
-  { readSvgFile }
+  mapStateToProps,
+  { readSvgFile, increaseScale, decreaseScale, resetScale }
 )(ToolBar);

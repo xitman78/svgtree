@@ -20,6 +20,10 @@ class ArtBoard extends Component {
     pr.nativeEvent.stopPropagation();
 
     //pr.nativeEvent.target.className += " selected-fill";
+
+    let el = document.getElementById(pr.nativeEvent.target.id);
+
+    if(el && el.length) el[0].className += " selected-fill";
   }
 
 
@@ -53,11 +57,15 @@ class ArtBoard extends Component {
 
     let svg = this.props.svg;
 
-    let containerStyle =  svg ? { width: svg['@props'].width, height: svg['@props'].height } : {display: 'none'};
+    let scale = this.props.artBoard.get('scale');
+//width: svg['@props'].width, height: svg['@props'].height,
+    let containerStyle =  svg ? { width: svg['@props'].width, height: svg['@props'].height, transform: `scale(${scale}` } : {display: 'none'};
 
     return (
-      <div className="svg-show-container" style={containerStyle}>
-        {svg ? (this.renderSvgNode(svg)) : ('No svg')}
+      <div className="atr-board-container">
+        <div className="svg-show-container" style={containerStyle}>
+          {svg ? (this.renderSvgNode(svg)) : ('No svg')}
+        </div>
       </div>
     );
   }
@@ -65,6 +73,7 @@ class ArtBoard extends Component {
 
 const mapStateToProps = createStructuredSelector({
   svg: state => state.getIn(['svgFile', 'parsedSvg']),
+  artBoard: state => state.get('artBoard')
 });
 
 export default connect(

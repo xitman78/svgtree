@@ -11,7 +11,7 @@ export function readSvgFile(file) {
       payload: { file }
     });
 
-    if(file.size > 1024*100) {
+    if(file.size > 1024*200) {
       dispatch({ type: 'READ_SVG_ERROR', payload: { error: 'SVG file is larger than 100kb' }});
       return;
     }
