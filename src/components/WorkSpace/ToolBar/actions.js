@@ -12,9 +12,9 @@ export function decreaseScale() {
   };
 }
 
-export function resetScale() {
+export function setScale(scale) {
   return {
-    type: 'RESET_SCALE',
-    payload: null
+    type: 'SET_SCALE',
+    payload: scale
   };
 }

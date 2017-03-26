@@ -7,11 +7,11 @@ import FontIcon from 'material-ui/FontIcon';
 import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-more';
 import MenuItem from 'material-ui/MenuItem';
 import DropDownMenu from 'material-ui/DropDownMenu';
-import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import { readSvgFile } from '../SvgImport/actions'
-import { increaseScale, decreaseScale, resetScale} from './actions'
+import { increaseScale, decreaseScale, setScale} from './actions'
 
 import './ToolBar.sass'
 
@@ -42,17 +42,23 @@ class ToolBar extends React.Component {
      }
    }
 
+   changeScale(pr, i, val) {
+
+     //console.log('change', arguments);
+     this.props.setScale(val);
+
+   }
+
   render() {
 
     return (
       <div className="toolbar-wrapper">
         <Toolbar>
           <ToolbarGroup>
-            <ToolbarTitle text="Import your SVG graphics" />
-            <FontIcon className="muidocs-icon-custom-sort" />
-            <ToolbarSeparator />
-            <RaisedButton
+            <FlatButton
             onTouchTap={this.handleTouchTap.bind(this)}
+            icon={<FontIcon className="material-icons">file_upload</FontIcon>}
+            primary={true}
             label="Upload SVG">
               <input
                 onChange={this.onSvgFileChange.bind(this)}
@@ -61,23 +67,24 @@ class ToolBar extends React.Component {
                 name="svg_file"
                 accept=".svg"
                 id="svg_file_upload" />
-            </RaisedButton>
-            {this.props.scale * 100.0 + '%'}
-            <button onClick={this.props.increaseScale}>+</button>
-            <button onClick={this.props.decreaseScale}>-</button>
-            <IconMenu
-              iconButtonElement={
-                <IconButton touch={true}>
-                  <NavigationExpandMoreIcon />
-                </IconButton>
-              }
-            >
-              <MenuItem primaryText="Reset scale" onClick={this.props.resetScale}/>
-              <MenuItem primaryText="More Info" />
-            </IconMenu>
+            </FlatButton>
+            <ToolbarSeparator />
+            <IconButton tooltip="Zoom In" onClick={this.props.increaseScale} disabled={!this.props.enableZoomIn}>
+              <FontIcon className="material-icons">add_circle_outline</FontIcon>
+            </IconButton>
+            <IconButton tooltip="Zoom Out" onClick={this.props.decreaseScale} disabled={!this.props.enableZoomOut}>
+              <FontIcon className="material-icons">remove_circle_outline</FontIcon>
+            </IconButton>
+            <DropDownMenu maxHeight={300} value={this.props.scale} onChange={this.changeScale.bind(this)}>
+              <MenuItem value={0.25} key={1} primaryText="25%" />
+              <MenuItem value={0.5} key={2} primaryText="50%" />
+              <MenuItem value={1.0} key={3} primaryText="100%" />
+              <MenuItem value={1.5} key={4} primaryText="150%" />
+              <MenuItem value={2.0} key={5} primaryText="200%" />
+            </DropDownMenu>
           </ToolbarGroup>
           <ToolbarGroup firstChild={true}>
-            <DropDownMenu value={this.state.value} onChange={this.handleMenuChange.bind(this)}>
+          <DropDownMenu value={this.state.value} onChange={this.handleMenuChange.bind(this)}>
               <MenuItem value={1} primaryText="All Broadcasts" />
               <MenuItem value={2} primaryText="All Voice" />
               <MenuItem value={3} primaryText="All Text" />
@@ -95,10 +102,12 @@ class ToolBar extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  scale: state => state.getIn(['artBoard', 'scale'])
+  scale: state => state.getIn(['artBoard', 'scale']),
+  enableZoomIn: state => state.getIn(['artBoard', 'enableZoomIn']),
+  enableZoomOut: state => state.getIn(['artBoard', 'enableZoomOut'])
 });
 
 export default connect(
   mapStateToProps,
-  { readSvgFile, increaseScale, decreaseScale, resetScale }
+  { readSvgFile, increaseScale, decreaseScale, setScale }
 )(ToolBar);
