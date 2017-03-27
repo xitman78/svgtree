@@ -11,6 +11,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import { readSvgFile } from '../SvgImport/actions'
+import { scaleSteps } from 'helpers/artBoardConsts'
 import { increaseScale, decreaseScale, setScale} from './actions'
 
 import './ToolBar.sass'
@@ -76,11 +77,7 @@ class ToolBar extends React.Component {
               <FontIcon className="material-icons">remove_circle_outline</FontIcon>
             </IconButton>
             <DropDownMenu maxHeight={300} value={this.props.scale} onChange={this.changeScale.bind(this)}>
-              <MenuItem value={0.25} key={1} primaryText="25%" />
-              <MenuItem value={0.5} key={2} primaryText="50%" />
-              <MenuItem value={1.0} key={3} primaryText="100%" />
-              <MenuItem value={1.5} key={4} primaryText="150%" />
-              <MenuItem value={2.0} key={5} primaryText="200%" />
+            { scaleSteps.map((step, i) => <MenuItem value={step} key={i + 1} primaryText={step * 100.0 + '%'} />)}
             </DropDownMenu>
           </ToolbarGroup>
           <ToolbarGroup firstChild={true}>

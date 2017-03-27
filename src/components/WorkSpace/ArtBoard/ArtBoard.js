@@ -53,18 +53,23 @@ class ArtBoard extends Component {
 
   render() {
 
-    console.log('Render SvgShow');
+    console.log('Render ArtBoard');
 
     let svg = this.props.svg;
 
     let scale = this.props.artBoard.get('scale');
-//width: svg['@props'].width, height: svg['@props'].height,
-    let containerStyle =  svg ? { width: svg['@props'].width, height: svg['@props'].height, transform: `scale(${scale}` } : {display: 'none'};
+
+    let width = this.props.artBoard.get('width') * scale + 'px';
+    let height = this.props.artBoard.get('height') * scale + 'px';
+    let wraperStyle = {width, height};
+    let containerStyle =  svg ? { transform: `scale(${scale}` } : {display: 'none'};
 
     return (
       <div className="atr-board-container">
-        <div className="svg-show-container" style={containerStyle}>
-          {svg ? (this.renderSvgNode(svg)) : ('No svg')}
+        <div className="art-board-middle-wrapper" style={wraperStyle}>
+          <div className="svg-show-container" style={containerStyle}>
+            {svg ? (this.renderSvgNode(svg)) : ('No svg')}
+          </div>
         </div>
       </div>
     );

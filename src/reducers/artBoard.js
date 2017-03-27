@@ -1,16 +1,12 @@
 import { fromJS } from 'immutable'
-
-const minScale = 0.25;
-const maxScale = 2.0;
-
-const scaleSteps = [
-  0.25, 0.5, 1.0, 1.5, 2.0
-];
+import { minScale, maxScale, scaleSteps } from 'helpers/artBoardConsts'
 
 const initialState = fromJS({
   scale: 1.0,
   enableZoomIn: true,
   enableZoomOut: true,
+  width: 0,
+  height: 0
 });
 
 export default function artBoard(state = initialState, action) {
@@ -37,6 +33,17 @@ export default function artBoard(state = initialState, action) {
         let nextScale = (ind > 0 ) ? scaleSteps[ind - 1] : scaleSteps[0];
         return state.merge({ scale: nextScale, enableZoomIn: true, enableZoomOut: enableZoomOut });
       }
+
+    case 'SVG_PARSED':
+    {
+      let svg = action.payload;
+      let width = svg['@props']['width'] || 300;  // fallback if size is not defined in SVG
+      let height = svg['@props']['height'] || 300; //
+      width = parseInt(width.replace(/px/, ''));
+      height = parseInt(height.replace(/px/, ''));
+
+      return state.merge({ width, height });
+    }
 
     default:
       return state;
