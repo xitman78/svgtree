@@ -1,5 +1,16 @@
 import convertToReactProps from './convertToReactProps'
 
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( let i=0; i < 8; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
 function inlineStyleToCssObject(inlineCSS) {
 	let regex = /([\w-]*)\s*:\s*([^;]*)/g;
 	let match, properties={};
@@ -28,7 +39,7 @@ function xmlToJson(xml) {
 					obj["@props"][convertToReactProps(attribute.nodeName)] = attribute.nodeValue;
 				}
 			}
-			if (!obj['@props']['id']) obj['@props']['id'] = Math.random().toString(36).substring(16);
+			if (!obj['@props']['id']) obj['@props']['id'] = makeid();
 		}
 	} else if (xml.nodeType == 3) { // text
 		obj = typeof(xml.nodeValue) === "string" ? xml.nodeValue.trim() : xml.nodeValue;

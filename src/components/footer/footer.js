@@ -19,8 +19,10 @@ class Footer extends Component {
 
     console.log('Render Footer');
 
+    let exClass = this.props.route === '/' ? 'fixed' : 'flex';
+
     return (
-      <Paper className="AppFooter">
+      <Paper className={'AppFooter ' + exClass}>
         {
           this.props.route === '/' ?
           <Timeline />

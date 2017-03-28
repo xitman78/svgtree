@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router'
 import { connect } from 'react-redux'
-
+import { createStructuredSelector} from 'reselect'
 import MainHeader from './components/header/header'
-import MainMenu from './components/menu/menu'
 import ModalAlert from './components/modals/alert'
 import MySnackbar from './components/modals/snackbar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -16,14 +15,15 @@ class App extends Component {
 
   render() {
 
+    let exClass = this.props.route === '/' ? 'fixed' : 'flex';
+
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-          <div className="App">
-            <div className="AppContent">
+          <div className={'App ' + exClass}>
+            <div className={'AppContent ' + exClass}>
               <ModalAlert />
               <MySnackbar />
               <MainHeader />
-              <MainMenu />
                 {this.props.children}
             </div>
             <Footer />
@@ -35,4 +35,8 @@ class App extends Component {
 
 injectTapEventPlugin();
 
-export default connect(state => ({}), {})(App);
+const mapStateToProps = createStructuredSelector({
+  route: state => state.getIn(['route', 'locationBeforeTransitions', 'pathname'])
+});
+
+export default connect(mapStateToProps, {})(App);

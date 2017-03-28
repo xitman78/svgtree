@@ -23,7 +23,10 @@ class ArtBoard extends Component {
 
     let el = document.getElementById(pr.nativeEvent.target.id);
 
-    if(el && el.length) el[0].className += " selected-fill";
+    let box = el.getBBox();
+
+    console.log('box', box);
+    //if(el && el.length) el[0].className += " selected-fill";
   }
 
 
