@@ -37,8 +37,8 @@ export default function artBoard(state = initialState, action) {
     case 'SVG_PARSED':
     {
       let svg = action.payload;
-      let width = svg['@props']['width'] || 300;  // fallback if size is not defined in SVG
-      let height = svg['@props']['height'] || 300; //
+      let width = svg['@props']['width'] || '300px';  // fallback if size is not defined in SVG
+      let height = svg['@props']['height'] || '300px'; //
       width = parseInt(width.replace(/px/, ''));
       height = parseInt(height.replace(/px/, ''));
 
