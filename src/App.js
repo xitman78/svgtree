@@ -9,9 +9,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import Footer from './components/footer/footer'
 import muiTheme from './MuiTheme'
+import { resizeAction } from 'actions/resizeAction'
 import './App.sass'
 
+
 class App extends Component {
+
+  componentDidMount() {
+    this.props.resizeAction();
+  }
 
   render() {
 
@@ -39,4 +45,4 @@ const mapStateToProps = createStructuredSelector({
   route: state => state.getIn(['route', 'locationBeforeTransitions', 'pathname'])
 });
 
-export default connect(mapStateToProps, {})(App);
+export default connect(mapStateToProps, { resizeAction })(App);
