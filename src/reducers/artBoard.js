@@ -6,7 +6,8 @@ const initialState = fromJS({
   enableZoomIn: true,
   enableZoomOut: true,
   width: 0,
-  height: 0
+  height: 0,
+  selectionsMap: {}
 });
 
 export default function artBoard(state = initialState, action) {
@@ -35,15 +36,26 @@ export default function artBoard(state = initialState, action) {
       }
 
     case 'SVG_PARSED':
-    {
-      let svg = action.payload;
-      let width = svg['@props']['width'] || '300px';  // fallback if size is not defined in SVG
-      let height = svg['@props']['height'] || '300px'; //
-      width = parseInt(width.replace(/px/, ''));
-      height = parseInt(height.replace(/px/, ''));
+      {
+        let svg = action.payload;
+        let width = svg['@props']['width'] || '300px';  // fallback if size is not defined in SVG
+        let height = svg['@props']['height'] || '300px'; //
+        width = parseInt(width.replace(/px/, ''));
+        height = parseInt(height.replace(/px/, ''));
 
-      return state.merge({ width, height });
-    }
+        return state.merge({ selectionsMap: {}, width, height });
+      }
+
+    case 'TOGGLE_ELEMENT_SELECTION':
+      {
+        let selEl = state.getIn(['selectionsMap', action.payload.id]);
+
+        if(!selEl) {
+          return state.setIn(['selectionsMap', action.payload.id], action.payload.rect);
+        } else {
+          return state.set('selectionsMap', state.get('selectionsMap').delete(action.payload.id));
+        }
+      }
 
     default:
       return state;
