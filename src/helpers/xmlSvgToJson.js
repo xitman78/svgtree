@@ -72,7 +72,7 @@ function xmlToJson(xml) {
 
 			if(nodeName === '#text') {
 				console.log('item.textContent', item.textContent);
-				obj.children.push({tag: nodeName, textContent: item.textContent});
+				obj.children.push({tag: nodeName, textContent: item.textContent, '@props': { id: makeid() } });
 				continue;
 			}
 

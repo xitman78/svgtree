@@ -7,7 +7,8 @@ const initialState = fromJS({
   enableZoomOut: true,
   width: 0,
   height: 0,
-  selectionsMap: {}
+  selectionsMap: {},
+  svgDoc: null,
 });
 
 export default function artBoard(state = initialState, action) {
@@ -43,7 +44,7 @@ export default function artBoard(state = initialState, action) {
         width = parseInt(width.replace(/px/, ''));
         height = parseInt(height.replace(/px/, ''));
 
-        return state.merge({ selectionsMap: {}, width, height });
+        return state.merge({ selectionsMap: {}, width, height, svgDoc: fromJS(svg) });
       }
 
     case 'TOGGLE_ELEMENT_SELECTION':
@@ -55,6 +56,25 @@ export default function artBoard(state = initialState, action) {
         } else {
           return state.set('selectionsMap', state.get('selectionsMap').delete(action.payload.id));
         }
+      }
+
+    case 'TOGGLE_SVG_TREE_NODE':
+      {
+        let fullPath = ['svgDoc'];
+
+        action.payload.indexPath.forEach(indx => {
+          fullPath.push('children');
+          fullPath.push(indx);
+        });
+
+        fullPath.push('collapsed');
+
+        let collapsed = state.getIn(fullPath);
+
+      //  console.log('Reducer collapsed', collapsed);
+
+        return state.setIn(fullPath, !collapsed);
+
       }
 
     default:
