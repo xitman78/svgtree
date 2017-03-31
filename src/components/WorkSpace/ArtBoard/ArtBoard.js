@@ -101,9 +101,9 @@ class ArtBoard extends Component {
          <div className="selection-container" style={wraperStyle}>
           {
 
-            selectionsMap.map((value, key) => {
+            selectionsMap.entrySeq().map(([key, value]) => {
               let style = {left: value.x * scale, top: value.y * scale, width: value.width * scale, height: value.height * scale};
-              console.log('style', style);
+              // console.log('style', style);
               return <div className="svg-selection" style={style} key={key}></div>
             })
 
