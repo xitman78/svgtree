@@ -5,7 +5,10 @@
   overflow-x: hidden
   overflow-y: scroll
   background-color: #41454B
+
+.svg-tree-content
   padding-top: 10px
+  padding-bottom: 10px
 
 .svg-tree-node
   margin-left: 10px
@@ -16,6 +19,7 @@
     font-family: 'Roboto'
     line-height: 150%
     cursor: pointer
+    user-select: none
 
 .svg-tree-text-content
   margin-left: 10px
@@ -24,3 +28,22 @@
   font-style: italic
   font-weight: 300
   color: #999
+
+.svg-tree-arrow
+  width: 10px
+  height: 10px
+  margin-right: 6px
+
+.svg-tree-arrow-path
+  transform-origin: 5px 5px
+  fill: none
+  stroke: #999999
+  stroke-width: 2
+  stroke-linecap: round
+  transition: all 0.2s ease
+  &.collapsed
+    transform: rotate(0deg)
+  &.opened
+    transform: rotate(90deg)
+  &.childless
+    opacity: 0

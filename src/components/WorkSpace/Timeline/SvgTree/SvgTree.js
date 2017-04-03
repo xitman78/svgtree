@@ -25,12 +25,24 @@ class SvgTree extends React.Component {
       return <div className="svg-tree-text-content" key={indexPath.join('-')}>{node.get('textContent')}</div>;
     }
 
-    // console.log('tag', tag);
-    // console.log('indexPath', indexPath);
+    if (tag === 'g') tag = 'group';
+
+    if (!/^svr_id_/.test(id)) tag += ` "${id}"`; //show id as name if not generated
+
+    let arrowPathClass = 'svg-tree-arrow-path ' + ((collapsed) ? 'collapsed': 'opened');
+
+    if (!children) arrowPathClass += ' childless';
 
     return (
       <div className="svg-tree-node" key={indexPath.join('-')}>
-        <div><span className="title" onClick={this.toggleNode.bind(this, indexPath)}>{collapsed ? '+ ': '- '} {tag}</span></div>
+        <div>
+          <span className="title" onClick={this.toggleNode.bind(this, indexPath)}>
+            <svg className="svg-tree-arrow" viewBox="0 0 10 10" width="10px" height="10px">
+              <path className={arrowPathClass} d="M2 1 L7 5 L2 9"/>
+            </svg>
+            {tag}
+          </span>
+        </div>
         {children && !collapsed && children.map((n,i) => this.renderNode(n, level + 1, indexPath.concat(i)))}
       </div>
     );
@@ -41,7 +53,9 @@ class SvgTree extends React.Component {
     let svgDoc = this.props.svgDoc;
     return(
       <div className="svg-tree-container">
-      { svgDoc && svgDoc.get('children') && svgDoc.get('children').map((node, i) => this.renderNode(node, 0, [i]))}
+        <div className="svg-tree-content">
+        { svgDoc && svgDoc.get('children') && svgDoc.get('children').map((node, i) => this.renderNode(node, 0, [i]))}
+        </div>
       </div>
     );
   }
