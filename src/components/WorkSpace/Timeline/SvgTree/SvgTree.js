@@ -44,9 +44,11 @@ class SvgTree extends React.Component {
 
     if (!path) path = 'M2 1 L7 5 L2 9';
 
+    let selected = this.props.selectionsMap.get(id);
+
     return (
       <div className="svg-tree-node" key={indexPath.join('-')}>
-        <div>
+        <div className={selected ? 'selected-node' : ''}>
           <span className="title" onClick={this.toggleNode.bind(this, indexPath)}>
             <svg className="svg-tree-arrow" viewBox="0 0 10 10" width="10px" height="10px">
               <path className={arrowPathClass} d={path}/>
@@ -74,7 +76,8 @@ class SvgTree extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-  svgDoc: state => state.getIn(['artBoard', 'svgDoc'])
+  svgDoc: state => state.getIn(['artBoard', 'svgDoc']),
+  selectionsMap: state => state.getIn(['artBoard', 'selectionsMap']),
 });
 
 export default connect(mapStateToProps, { toggleSvgTreeNode })(SvgTree);
