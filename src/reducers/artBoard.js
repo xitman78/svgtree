@@ -71,8 +71,6 @@ export default function artBoard(state = initialState, action) {
 
         let collapsed = state.getIn(fullPath);
 
-      //  console.log('Reducer collapsed', collapsed);
-
         return state.setIn(fullPath, !collapsed);
 
       }

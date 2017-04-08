@@ -1,17 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-
-import { toggleSvgTreeNode } from './actions'
+import { toggleSvgTreeNode, simulateElementClick } from './actions'
+import iconPaths from './svgIcoPaths'
 
 import './SvgTree.sass'
-
-const iconPaths = {
-  path: 'M0.959,8.937c0,0,0.203-2.86,2.056-3.959 c1.853-1.098,3.259-0.059,4.717-1.108c1.458-1.049,1.483-2.85,1.483-2.85',
-  rect: 'M1 1 L9 1 L9 9 L1 9Z',
-  polygon: 'M5 1.204 L9.278 8.531 L0.721 8.531Z',
-  circle: 'M5,9.078C2.748,9.078,0.922,7.252,0.922,5S2.748,0.922,5,0.922S9.078,2.748,9.078,5C9.078,7.252,7.252,9.078,5,9.078'
-};
 
 
 class SvgTree extends React.Component {
@@ -20,13 +13,15 @@ class SvgTree extends React.Component {
     this.props.toggleSvgTreeNode(indexPath);
   }
 
+  toggleSelection(id) {
+    this.props.simulateElementClick(id);
+  }
+
   renderNode(node, level, indexPath) {
     let tag = node.get('tag');
     let id = node.getIn(['@props', 'id']);
     let children = node.get('children');
     let collapsed = node.get('collapsed');
-
-    // console.log('id', id);
 
     if (tag === '#text') {
       return <div className="svg-tree-text-content" key={indexPath.join('-')}>{node.get('textContent')}</div>;
@@ -49,10 +44,10 @@ class SvgTree extends React.Component {
     return (
       <div className="svg-tree-node" key={indexPath.join('-')}>
         <div className={selected ? 'selected-node' : ''}>
-          <span className="title" onClick={this.toggleNode.bind(this, indexPath)}>
-            <svg className="svg-tree-arrow" viewBox="0 0 10 10" width="10px" height="10px">
-              <path className={arrowPathClass} d={path}/>
-            </svg>
+          <svg className="svg-tree-arrow" viewBox="0 0 10 10" width="10px" height="10px" onClick={this.toggleNode.bind(this, indexPath)}>
+            <path className={arrowPathClass} d={path}/>
+          </svg>
+          <span className="title" onClick={this.toggleSelection.bind(this, id)}>
             {tag}
           </span>
         </div>
@@ -80,4 +75,4 @@ const mapStateToProps = createStructuredSelector({
   selectionsMap: state => state.getIn(['artBoard', 'selectionsMap']),
 });
 
-export default connect(mapStateToProps, { toggleSvgTreeNode })(SvgTree);
+export default connect(mapStateToProps, { toggleSvgTreeNode, simulateElementClick })(SvgTree);
