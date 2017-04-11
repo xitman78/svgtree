@@ -15,14 +15,67 @@ const nearbyIcon = <IconLocationOn />;
 
 class Footer extends Component {
 
+  componentWillMount() {
+    this.setState({ height: '200px', y: 200 });
+  }
+
+  startFooterResize(event) {
+
+    if(this.state.dragStarted) {
+      console.log('Drag already started');
+      return;
+    }
+
+    let ov = event.nativeEvent;
+
+    this.setState({ dragStarted: true, lastY: ov.pageY });
+
+    let moveHandler = (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if(this.state.dragStarted) {
+        let offsetY = this.state.lastY - ev.pageY;
+        let y = (this.state.y + offsetY);
+        y = y < 50 ? 50 : y;
+        let height = y + 'px';
+        this.setState({lastY: ev.pageY, y, height });
+      }
+   };
+
+   let upHandler = (ev) => {
+     ev.preventDefault();
+     ev.stopPropagation();
+     if(this.state.dragStarted) {
+       let offsetY = this.state.lastY - ev.pageY;
+       let y = (this.state.y + offsetY);
+       y = y < 50 ? 50 : y;
+       let height = y + 'px';
+       this.setState({dragStarted: false, y, height });
+       window.removeEventListener('mousemove', moveHandler);
+       window.removeEventListener('mouseup', upHandler);
+      // this.props.fireSnackbar({message: 'Possition changed!'});
+      // this.props.draggedMoved(x, y);
+     }
+   };
+
+   window.addEventListener('mousemove', moveHandler);
+   window.addEventListener('mouseup', upHandler);
+
+  }
+
   render() {
 
     console.log('Render Footer');
 
     let exClass = this.props.route === '/' ? 'fixed' : 'flex';
 
+    let splitterStyle = { height: this.state.height };
+
+    console.log('splitterStyle', splitterStyle);
+
     return (
-      <Paper className={'AppFooter ' + exClass}>
+      <Paper className={'AppFooter ' + exClass} style={splitterStyle}>
+        <div className="footer-splitter" onMouseDown={this.startFooterResize.bind(this)}></div>
         {
           this.props.route === '/' ?
           <Timeline />

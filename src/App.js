@@ -30,7 +30,7 @@ class App extends Component {
               <ModalAlert />
               <MySnackbar />
               <MainHeader />
-                {this.props.children}
+              { this.props.children }
             </div>
             <Footer />
         </div>
